@@ -1,0 +1,37 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    outline: 1px solid red;
+}
+
+/* not important */
+.container{
+    margin-top: 5%;
+}
+
+/* important */
+.registration{
+    width: 45%;
+    display: inline-block;
+    margin: 0% 4% 0% 4%;
+}
+
+/* important */
+.login{
+    width: 45%;
+    display:inline-block;
+    vertical-align: top;
+}
+
+/* important */
+.login p{
+    color: red;
+    font-size: 14pt;
+}
+
+/* important */
+button{
+    float: right;
+    box-shadow: 3px 3px black !important;
+    border-radius: 0px !important;
+}
