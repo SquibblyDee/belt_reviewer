@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+    <head>
+        <title>Add Book and Review</title>
+        <!-- linking a css style sheet -->
+        <link rel="stylesheet" href="{% static 'belt_reviewer_app/css/styles.css' %}">
+        <!-- Linking Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <div class="heading">
+                <a href="/books">Home</a>
+                <a href="/logout">Log out</a>
+            </div>
+            <h1>New Book Title and a Review:</h1>
+            <form action='/books/processbook', method='post'>
+                {% csrf_token %}
+              <div class="form-group">
+                <label for="title">Book Title:</label>
+                <input type="text" class="form-control" id="title" name="title">
+              </div>
+              <div class="form-group">
+                <label for="authorlist">Choose from the list:</label>
+                <select class="form-control" id="authorlist" name="authorlist">
+                  <option>Stephen King</option>
+                  <option>Dean Koontz</option>
+                  <option>Gilbert Godfreid</option>
+                  <option>Jimmy Carter</option>
+                  <option>Zeus</option>
+                </select>
+              </div>
+              <div class="form-group">
+                  <label for="addauthor">Or add a new author:</label>
+                  <input type="text" class="form-control" id="addauthor" name="addauthor">
+                </div>
+              <div class="form-group">
+                <label for="review">Review:</label>
+                <textarea class="form-control" id="review" name="review" rows="3"></textarea>
+              </div>
+              <div class="form-group col-md-2">
+                <label for="rating">Rating</label>
+                <select id="rating" id="rating" class="form-control">
+                  <option selected>Select</option>
+                  <option value="1">1 star</option>
+                  <option value="2">2 stars</option>
+                  <option value="3">3 stars</option>
+                  <option value="4">4 stars</option>
+                  <option value="5">5 stars</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary my-1">Add Book and Review</button>
+            </form>
+        </div>

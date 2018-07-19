@@ -2,7 +2,7 @@
 {% load staticfiles %}
 <html lang="en">
     <head>
-        <title>CHANGE ME!!!!!!!!!!!!!!!!!</title>
+        <title>Books Home</title>
         <!-- linking a css style sheet -->
         <link rel="stylesheet" href="{% static 'belt_reviewer_app/css/styles.css' %}">
         <!-- Linking Bootstrap -->
@@ -10,8 +10,12 @@
     </head>
     <body>
         <div class="container">
+            <div class="heading">
+                <h3>Welcome, {{ request.session.welcomename }}!</h3>
+                <a href="/logout">Log out</a>
+                <a href="/books/add">Add Book and Review</a>
+            </div>
             <h1> You've made it through login or registration! </h1>
             <h3>{{ request.session.welcomemessage }}</h3>
-            <h3>{{ request.session.welcomename }}</h3>
-            <h1><a href="/logout">Log out</a></h1>
+            
         </div>

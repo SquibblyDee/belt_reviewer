@@ -35,3 +35,13 @@ button{
     box-shadow: 3px 3px black !important;
     border-radius: 0px !important;
 }
+
+.heading h3{
+    display: inline-block;
+}
+
+.heading a{
+    display: inline-block;
+    float: right;
+    margin-left: 15%;
+}

@@ -2,12 +2,13 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib import auth
+from django.db import connection
 
 #import bcrypt
 import bcrypt
 
 #  import our db(s)
-from .models import User
+from .models import *
 
 #This is our index page and contains login and registration forms
 def loginandreg(request):
@@ -37,7 +38,7 @@ def process_register(request, methods=['POST']):
         request.session['error'] = ""
         request.session['welcomename'] = request.POST['input_first_name']
         request.session['welcomemessage'] = 'Successfully registered!'
-        return redirect('/landing')
+        return redirect('/books')
 
 #Processes information from the login form
 def process_login(request, methods=['POST']):
@@ -51,20 +52,36 @@ def process_login(request, methods=['POST']):
             request.session['isloggedin'] =  row['id']
             request.session['welcomename'] = row['first_name']
             request.session['welcomemessage'] = 'Successfully logged in!'
-            return redirect('/landing')
+            return redirect('/books')
     request.session['error'] = "• Try again"
     return redirect('/')
 
 #This is the landing page that the user arrives at after registering or logging in
-def landing(request):
+def books(request):
     # If the user has a isLoggedin session
     query = User.objects.filter(id=request.session['isloggedin']).values('id', 'email')
     if 'isloggedin' in request.session:
         for row in query:
             if request.session['isloggedin'] == row['id'] and request.session['useremail'] == row['email']:
-                return render(request,'belt_reviewer_app/landing.html')
+                return render(request,'belt_reviewer_app/books.html')
     else:
         return redirect('/')
+
+def addbook(request):
+    print("IN ADDBOOK")
+    return render(request, 'belt_reviewer_app/addbook.html')
+
+def processbook(request, methods=['POST']):
+    if request.POST['addauthor'] == "":
+        author = request.POST['authorlist']
+    else:
+        author = request.POST['addauthor']
+    Book.objects.create(title=request.POST['title'], author=author, review=request.POST['review'])
+    id = request.session['isloggedin']
+    review_id = Book.objects.latest(field_name='id')
+    print("REVIEW ID ", review_id.id)
+    print("ID: ", id)
+    return redirect('/books')
 
 # Clears out session / logs out the user
 def logout(request):

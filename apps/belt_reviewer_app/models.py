@@ -49,6 +49,15 @@ class User(models.Model):
     updated_at = models.DateField(auto_now=True)
     objects = UserManager()
 
+class Book(models.Model):
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255)
+    review = models.TextField(default="no review provided")
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+    users = models.ManyToManyField(User, related_name="user_reviews")
+    objects = UserManager()
+
     # *************************
     # Connect an instance of BlogManager to our Blog model overwriting
     # the old hidden objects key with a new one with extra properties!!!
