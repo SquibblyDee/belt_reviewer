@@ -11,8 +11,8 @@
     <body>
         <div class="container">
             <div class="heading">
-                <a href="/books">Home</a>
                 <a href="/logout">Log out</a>
+                <a href="/books">Home</a>
             </div>
             <h1>New Book Title and a Review:</h1>
             <form action='/books/processbook', method='post'>
@@ -49,7 +49,10 @@
                   <option value="4">4</option>
                   <option value="5">5</option>
                 </select>
+                <input type="hidden" name="book_id" value={{the_book.id}} id="book_id">
               </div>
               <button type="submit" class="btn btn-primary my-1">Add Book and Review</button>
             </form>
         </div>
+    </body>
+</html>

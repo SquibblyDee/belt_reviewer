@@ -1,7 +1,7 @@
 *{
     margin: 0px;
     padding: 0px;
-    outline: 1px solid red;
+    /* outline: 1px solid red; */
 }
 
 /* not important */
@@ -44,4 +44,32 @@ button{
     display: inline-block;
     float: right;
     margin-left: 15%;
+    margin-bottom: 5%;
+}
+
+.heading{
+    padding-bottom: 5% !important;
+}
+
+.recent_reviews{
+    display: inline-block;
+    width: 60%;
+}
+
+.pre-scrollable{
+    display: inline-block;
+    width: 30%;
+    vertical-align: top;
+    float: right;
+}
+
+.show_book_review{
+    display: inline-block;
+    width: 60%;
+}
+.add_a_review{
+    display: inline-block;
+    width: 30%;
+    margin-left: 5%;
+    vertical-align: top;
 }

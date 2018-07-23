@@ -16,16 +16,18 @@
                 <a href="/books/add">Add Book and Review</a>
             </div>
             <div class="recent_reviews">
-                <h1>Recent Book Reviews:</h1>
+                <h4>Recent Book Reviews:</h4>
                 {% for review in recent_reviews %}
-                    <a href="#">{{review.reviewed_books.title}}</a>
+                    <a href=/books/{{review.reviewed_books.id}}>{{review.reviewed_books.title}}</a>
                     <p>Rating: {{review.rating}}/5 stars</p>
-                    <p><a href="#">{{review.reviewed_users.first_name}}</a> says: {{review.review}}</p>
+                    <p><a href=/users/{{request.session.isloggedin}}>{{review.reviewed_users.first_name}}</a> says: {{review.review}}</p>
                     <p>Posted on {{review.created_at}}</p>
                 {% endfor %}
             </div>
-            <div class="other_books">
-                
+            <div class="pre-scrollable">
+                <h4>Other Books with Reviews:</h4>
+                {% for book in books_with_reviews %}
+                    <p><a href=/books/{{book.id}}>{{book.title}}</a></p>
+                {% endfor %}
             </div>
-            
         </div>

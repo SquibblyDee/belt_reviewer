@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Add Book and Review</title>
+        <!-- linking a css style sheet -->
+        <link rel="stylesheet" href="{% static 'belt_reviewer_app/css/styles.css' %}">
+        <!-- Linking Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <div class="heading">
+                <a href="/logout">Log out</a>
+                <a href="/books">Home</a>
+            </div>
+            <div class="user_info">
+                <h3>User Alias: {{user_data.alias}}</h3>
+                <h4>Name: {{user_data.first_name}}</h4>
+                <h4>Email: {{user_data.email}}</h4>
+                <h4>Total Reviews: {{post_count}}</h4>
+                <h4>Posted Reviews on the following books:</h4>
+                {% for thing in reviewed_things %}
+                <p><a href=#>{{thing.reviewed_books.title}}</a></p>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

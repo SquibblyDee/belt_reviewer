@@ -9,5 +9,9 @@ urlpatterns = [
     url(r'^books$', views.books),
     url(r'^books/add$', views.addbook),
     url(r'^books/processbook$', views.processbook),
+    url(r'^books/process_review$', views.process_review),
+    url(r'^books/(?P<num>\d+)$', views.showbook),
+    url(r'^delete/(?P<num>\d+)$', views.delete),
+    url(r'^users/(?P<num>\d+)$', views.users),
     url(r'^logout$', views.logout),
 ]

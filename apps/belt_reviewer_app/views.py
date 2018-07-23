@@ -65,14 +65,13 @@ def books(request):
             if request.session['isloggedin'] == row['id'] and request.session['useremail'] == row['email']:
                 context ={
                     "recent_reviews" : Review.objects.order_by("-id")[:3],
-                    "books_with_reviews" : Book.objects.all()
+                    "books_with_reviews" : Book.objects.order_by("-id")[3:]
                 }
                 return render(request,'belt_reviewer_app/books.html', context)
     else:
         return redirect('/')
 
 def addbook(request):
-    print("IN ADDBOOK")
     return render(request, 'belt_reviewer_app/addbook.html')
 
 def processbook(request, methods=['POST']):
@@ -84,11 +83,36 @@ def processbook(request, methods=['POST']):
     Book.objects.create(title=request.POST['title'], author=author)
     this_book = Book.objects.last()
     Review.objects.create(review=request.POST['review'], reviewed_books=this_book, reviewed_users=this_user, rating=request.POST['rating'])
-    id = request.session['isloggedin']
-    review_id = Book.objects.latest(field_name='id')
-    print("REVIEW ID ", review_id.id)
-    print("ID: ", id)
     return redirect('/books')
+
+def process_review(request, methods=['POST']):
+    this_book = Book.objects.get(id=request.POST['book_id'])
+    this_user = User.objects.get(id=request.session['isloggedin'])
+    Review.objects.create(review=request.POST['review'], reviewed_books=this_book, reviewed_users=this_user, rating=request.POST['rating'])
+    return redirect('/books/{}'.format(request.POST['book_id']))
+
+def showbook(request, num):
+    context={
+        "the_book": Book.objects.get(id=num),
+        "all_reviews": Review.objects.filter(reviewed_books=num).order_by("-created_at")
+    }
+    return render(request,'belt_reviewer_app/showbook.html', context)
+
+def delete(request, num):
+    the_review = Review.objects.get(id=num)
+    the_book = the_review.reviewed_books.id
+    the_review.delete()
+    return redirect('/books/{}'.format(the_book))
+
+def users(request, num):
+    context={
+        "user_data": User.objects.get(id=request.session['isloggedin']),
+        "post_count": User.objects.get(id=request.session['isloggedin']).user_reviews.count(),
+        "reviewed_things": User.objects.get(id=request.session['isloggedin']).user_reviews.all(),
+    }
+    reviewed_things = User.objects.get(id=request.session['isloggedin']).user_reviews.all()
+    print("REVIEWED THINGS: ", reviewed_things)
+    return render(request, 'belt_reviewer_app/users.html', context)
 
 # Clears out session / logs out the user
 def logout(request):
