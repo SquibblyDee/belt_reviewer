@@ -63,7 +63,11 @@ def books(request):
     if 'isloggedin' in request.session:
         for row in query:
             if request.session['isloggedin'] == row['id'] and request.session['useremail'] == row['email']:
-                return render(request,'belt_reviewer_app/books.html')
+                context ={
+                    "recent_reviews" : Review.objects.order_by("-id")[:3],
+                    "books_with_reviews" : Book.objects.all()
+                }
+                return render(request,'belt_reviewer_app/books.html', context)
     else:
         return redirect('/')
 
@@ -76,7 +80,10 @@ def processbook(request, methods=['POST']):
         author = request.POST['authorlist']
     else:
         author = request.POST['addauthor']
-    Book.objects.create(title=request.POST['title'], author=author, review=request.POST['review'])
+    this_user = User.objects.get(id=request.session['isloggedin'])
+    Book.objects.create(title=request.POST['title'], author=author)
+    this_book = Book.objects.last()
+    Review.objects.create(review=request.POST['review'], reviewed_books=this_book, reviewed_users=this_user, rating=request.POST['rating'])
     id = request.session['isloggedin']
     review_id = Book.objects.latest(field_name='id')
     print("REVIEW ID ", review_id.id)

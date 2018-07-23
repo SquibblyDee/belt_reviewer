@@ -48,18 +48,25 @@ class User(models.Model):
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     objects = UserManager()
+    def __repr__(self):
+        return "<User object: {} {} {}>".format(self.first_name, self.last_name, self.email)
 
 class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
-    review = models.TextField(default="no review provided")
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
-    users = models.ManyToManyField(User, related_name="user_reviews")
     objects = UserManager()
+    def __repr__(self):
+        return "<Book object: {} {}>".format(self.title, self.author)
 
-    # *************************
-    # Connect an instance of BlogManager to our Blog model overwriting
-    # the old hidden objects key with a new one with extra properties!!!
+class Review(models.Model):
+    review = models.TextField()
+    rating = models.IntegerField()
+    reviewed_books = models.ForeignKey(Book, related_name="book_reviews")
+    reviewed_users = models.ForeignKey(User, related_name="user_reviews")
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
     objects = UserManager()
-    # *************************
+    def __repr__(self):
+        return "<Review object: {} {} {}>".format(self.review, self.reviewed_books, self.reviewed_users)

@@ -15,7 +15,17 @@
                 <a href="/logout">Log out</a>
                 <a href="/books/add">Add Book and Review</a>
             </div>
-            <h1> You've made it through login or registration! </h1>
-            <h3>{{ request.session.welcomemessage }}</h3>
+            <div class="recent_reviews">
+                <h1>Recent Book Reviews:</h1>
+                {% for review in recent_reviews %}
+                    <a href="#">{{review.reviewed_books.title}}</a>
+                    <p>Rating: {{review.rating}}/5 stars</p>
+                    <p><a href="#">{{review.reviewed_users.first_name}}</a> says: {{review.review}}</p>
+                    <p>Posted on {{review.created_at}}</p>
+                {% endfor %}
+            </div>
+            <div class="other_books">
+                
+            </div>
             
         </div>
